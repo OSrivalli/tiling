@@ -27,12 +27,12 @@ on:
 
 jobs:
     update_copyright:
-        - name: Update copyright headers and disclaimers
-          runs-on: [ubuntu-latest]
-          strategy:
-              fail-fast: false
-              matrix:
-                  target_branch: [main, release_rai_1_2] # To be updated on release branching
+    name: Update copyright headers and disclaimers
+    runs-on: [ubuntu-latest]
+    strategy:
+        fail-fast: false
+        matrix:
+            target_branch: [main, release_rai_1_2] # To be updated on release branching
 
     steps:
         - name: Checkout repo
