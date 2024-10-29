@@ -2,9 +2,9 @@
 name: Update copyright headers and disclaimers
 on:
     workflow_dispatch:
-	    inputs:
-		    disclaimer_mode:
-			    description: Add disclaimers ? Use `config` to decide based on the contents of the COPYRIGHT_EXCLUDES file.
+         inputs:
+              disclaimer_mode:
+                      description: Add disclaimers ? Use `config` to decide based on the contents of the COPYRIGHT_EXCLUDES file.
 				default: never
 				type: choice
 				options: 
