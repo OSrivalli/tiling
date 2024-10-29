@@ -34,22 +34,22 @@ jobs:
             matrix:
                 target_branch: [main, dev] # To be updated on release branching
 
-    steps:
-        - name: Checkout repo
-          uses: actions/checkout@v3
-          with:
-              fetch-depth: 0
-              ref: ${{ matrix.target_branch }}
-              token: ${{ secrets.GHE_Z1AIEBUILD_PAT_WRITE_PRIVATE }}
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+                  ref: ${{ matrix.target_branch }}
+                  token: ${{ secrets.GHE_Z1AIEBUILD_PAT_WRITE_PRIVATE }}
 
-        - name: Run action
-          uses: OSrivalli/actions/composite_actions/update_copyright_headers@main
-          with: 
-              pr_target_branch: ${{ matrix.target_branch }}
-              pr_reviewers: '["sri"]'
-              token: ${{ secrets.GHE_Z1AIEBUILDS_PAT_WRITE_PRIVATE }}
-              copyright_excludes_path: ${{ inputs.copyright_excludes_path || 'scripts/copyright_updates/COPYRIGHT_EXCLUDES' }}
-              languages_path: ${{ inputs.languages_path || 'scripts/copyright_updates/languages_config.yml' }}
-              disclaimer_mode: ${{ inputs.disclaimer_mode || 'never' }}
-              do_whitespace_surround: 'True'
-              comment_padding: 1
+            - name: Run action
+              uses: OSrivalli/actions/composite_actions/update_copyright_headers@main
+              with: 
+                  pr_target_branch: ${{ matrix.target_branch }}
+                  pr_reviewers: '["sri"]'
+                  token: ${{ secrets.GHE_Z1AIEBUILDS_PAT_WRITE_PRIVATE }}
+                  copyright_excludes_path: ${{ inputs.copyright_excludes_path || 'scripts/copyright_updates/COPYRIGHT_EXCLUDES' }}
+                  languages_path: ${{ inputs.languages_path || 'scripts/copyright_updates/languages_config.yml' }}
+                  disclaimer_mode: ${{ inputs.disclaimer_mode || 'never' }}
+                  do_whitespace_surround: 'True'
+                  comment_padding: 1
