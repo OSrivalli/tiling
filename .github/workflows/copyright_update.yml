@@ -32,7 +32,7 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-            target_branch: [main, release_rai_1_2] # To be updated on release branching
+            target_branch: [main, dev] # To be updated on release branching
 
     steps:
         - name: Checkout repo
