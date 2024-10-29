@@ -1,0 +1,56 @@
+---
+name: Update copyright headers and disclaimers
+on:
+    workflow_dispatch:
+	    inputs:
+		    disclaimer_mode:
+			    description: Add disclaimers ? Use `config` to decide based on the contents of the COPYRIGHT_EXCLUDES file.
+				default: never
+				type: choice
+				options: 
+				    - never
+					- config`
+					- always
+					
+			copyright_excludes_path:
+			    description: Path to COPYRIGHT_EXCLUDES file to use.
+				type: string
+				default: scripts/copyright_updates/COPYRIGHT_EXCLUDES
+				
+			languages_path:
+			    description: Path to languages definition file to use.
+				type: string
+				default: scripts/copyright_updates/languages_config.yml
+				
+	schedule:
+	    - cron: 0 22 * * 6     # Every saturday at 22:00
+			
+jobs:
+    update_copyright:
+	    name: Update copyright headers and disclaimers
+		runs-on: [Ubuntu]
+		strategy:
+		    fail-fast: false
+			matrix:
+			    target_branch: [main, release_rai_1_2] # To be updated on release branching
+				
+		steps:
+		    - name: Checkout repo
+			  uses: actions/checkout@v3
+			  with:
+  			      fetch-depth: 0
+				  ref: ${{ matrix.target_branch }}
+				  token: ${{ secrets.GHE_Z1AIEBUILD_PAT_WRITE_PRIVATE }}
+				
+			- name: Run action
+			  uses: OSrivalli/actions/composite_actions/update_copyright_headers@main
+			  with: 
+			      pr_target_branch: ${{ matrix.target_branch }}
+				  pr_reviewers: '["sri"]'
+				  token: ${{ secrets.GHE_Z1AIEBUILDS_PAT_WRITE_PRIVATE }}
+				  copyright_excludes_path: ${{ inputs.copyright_excludes_path || 'scripts/copyright_updates/COPYRIGHT_EXCLUDES' }}
+				  languages_path: ${{ inputs.languages_path || 'scripts/copyright_updates/languages_config.yml' }}
+				  disclaimer_mode: ${{ inputs.disclaimer_mode || 'never' }}
+				  do_whitespace_surround: 'True'
+				  comment_padding: 1
+			
