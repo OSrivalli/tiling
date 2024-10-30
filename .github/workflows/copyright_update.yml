@@ -40,14 +40,14 @@ jobs:
               with:
                   fetch-depth: 0
                   ref: ${{ matrix.target_branch }}
-                  token: ${{ secrets.GHE_Z1AIEBUILD_PAT_WRITE_PRIVATE }}
+                  token: ${{ secrets.AUTOMATION }}
 
             - name: Run action
               uses: OSrivalli/actions/composite_actions/update_copyright_headers@main
               with: 
                   pr_target_branch: ${{ matrix.target_branch }}
                   pr_reviewers: '["sri"]'
-                  token: ${{ secrets.GHE_Z1AIEBUILDS_PAT_WRITE_PRIVATE }}
+                  token: ${{ secrets.AUTOMATION }}
                   copyright_excludes_path: ${{ inputs.copyright_excludes_path || 'scripts/copyright_updates/COPYRIGHT_EXCLUDES' }}
                   languages_path: ${{ inputs.languages_path || 'scripts/copyright_updates/languages_config.yml' }}
                   disclaimer_mode: ${{ inputs.disclaimer_mode || 'never' }}
